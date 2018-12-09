@@ -1,3 +1,15 @@
+$(document).ready(() => {
+    $(".getaudio").bind("click", e => {
+        navigator.mediaDevices
+            .getUserMedia({
+                audio: true
+            })
+            .then(() => {
+                $(e.target).hide();
+            });
+    });
+});
+
 const peer = new Peer("app", {
     host: "localhost",
     port: 9000,
