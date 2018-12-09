@@ -4,10 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "concurrently \"peerjs --port 9000 --key peerjs\" \"parcel src/index.html\""
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "parcel": "^1.10.3",
     "sass": "^1.15.2"
+  },
+  "dependencies": {
+    "peer": "^0.2.10"
   }
 }
