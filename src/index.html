@@ -15,20 +15,47 @@
         <script src="./app.js"></script>
     </head>
     <body>
-        <div class="flex flex-column mt6 mw7 center tc">
-            <img src="./black.svg" height="120" /> <audio autoplay></audio>
+        <nav>
+            <img src="./white.svg" height="36" /> <audio autoplay></audio>
+        </nav>
+        <main class="tc">
             <h1>
-                The next lead in innovation for voice &amp; behavior
-                recognition.
+                Voice assistants suck.<br />
+                <span>Not this one.</span>
             </h1>
-        </div>
-        <div class="content">
-            <div class="circle"></div>
-            <div class="desc">
-                <h3>
-                    You'll need to allow Georgia to access your microphone
-                    before we get started.
-                </h3>
+            <h3>
+                <strong>Introducing Georgia,</strong> the next lead in voice
+                recognition and innovation. <br />
+                Proudly sponsored by MIT Labs &amp; Carnegie Mellon. Built in
+                SF.
+            </h3>
+        </main>
+        <!--
+            <div class="content mt8 mw7 center">
+                <h2>Some things you can ask me:</h2>
+                <div class="list">
+                    <div class="item">
+                        <h3>Weather</h3>
+                        <p>"Georgia, how is the weather today?"</p>
+                    </div>
+                </div>
+                <h2>Or even connect with integrations:</h2>
+                <div class="list">
+                    <div class="item">
+                        <h3>Apetit</h3>
+                        <p>"Georgia, please order a tuna melt for breakfast."</p>
+                    </div>
+                </div>
+            </div>
+        -->
+        <div class="access">
+            <div class="backdrop"></div>
+            <div class="alert">
+                <strong class="about"
+                    >Georgia needs access to your microphone before she can
+                    start listening to commands. Hit "Allow microphone access"
+                    to get started.</strong
+                >
                 <a class="button getaudio">Allow microphone access</a>
             </div>
         </div>
