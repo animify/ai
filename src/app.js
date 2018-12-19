@@ -5,7 +5,8 @@ $(document).ready(() => {
                 audio: true
             })
             .then(() => {
-                $(e.target).hide();
+                $(".alert").addClass("hidden");
+                $(".try").attr("disabled", false);
             });
     });
 });
