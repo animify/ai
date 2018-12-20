@@ -40,9 +40,15 @@ $(document).ready(() => {
 
     $("[load-listening]").bind("click", loadListening);
 
+    $("[load-home]").bind("click", loadHome);
+
     $("[stop-listening]").bind("click", stopListening);
 
-    function loadHome() {}
+    function loadHome() {
+        $("#vui").fadeOut(1000, () => {
+            $("main#intro").fadeIn(1000);
+        });
+    }
 
     function loadCommand() {
         $("main#intro").fadeOut(1000, () => {
