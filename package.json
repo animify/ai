@@ -4,10 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"peerjs --port 9000 --key peerjs\" \"parcel src/index.html\""
+    "start": "concurrently \"peerjs --port 9000 --key peerjs\" \"parcel src/index.html\"",
+    "deploy": "parcel build src/index.html && netlify deploy --prod --dir=dist"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "netlify-cli": "^2.6.0",
     "parcel": "^1.10.3",
     "sass": "^1.15.2"
   },

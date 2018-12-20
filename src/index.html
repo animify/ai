@@ -18,7 +18,7 @@
         <nav>
             <img src="./white.svg" height="44" /> <audio autoplay></audio>
         </nav>
-        <main class="tc">
+        <main id="intro" class="tc">
             <h1>
                 Voice assistants suck.<br />
                 <span>Not this one.</span>
@@ -31,6 +31,28 @@
             </h3>
             <div class="button try" disabled>Go ahead, Try me out</div>
             <small>Available in Greek only. Japanese coming soon.</small>
+        </main>
+        <main id="vui" class="tc" style="display: none">
+            <h2>Hi Alexis.</h2>
+            <h1 class="dialogue">How may I help you today?</h1>
+            <!--
+                <div class="list">
+                    <div class="item">
+                        <h3>Weather</h3>
+                        <p>"Georgia, how is the weather today?"</p>
+                    </div>
+                </div>
+            -->
+
+            <div class="speech">
+                <div id="wavesspeech" class="talk"></div>
+
+                <h3 class="talk">
+                    or say <strong>"Hey Georgia"</strong>, <br />followed by
+                    your command.
+                </h3>
+            </div>
+            <div id="waves" class="hidden"></div>
         </main>
         <!--
             <div class="content mt8 mw7 center">
