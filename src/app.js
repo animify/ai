@@ -22,8 +22,8 @@ $(document).ready(() => {
         container: containerSpeech,
         autostart: true
     };
-    let voicewaves = new VoiceWaves(opt);
-    let voicespeech = new VoiceWaves(optSpeech);
+    const voicewaves = new VoiceWaves(opt);
+    const voicespeech = new VoiceWaves(optSpeech);
 
     $("[access-mic]").bind("click", e => {
         navigator.mediaDevices
@@ -37,15 +37,13 @@ $(document).ready(() => {
     });
 
     $("[load-command]").bind("click", loadCommand);
-
     $("[load-listening]").bind("click", loadListening);
-
     $("[load-home]").bind("click", loadHome);
-
     $("[stop-listening]").bind("click", stopListening);
 
     function loadHome() {
         $("#vui").fadeOut(1000, () => {
+            stopListening();
             $("main#intro").fadeIn(1000);
         });
     }
