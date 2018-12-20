@@ -1,5 +1,8 @@
 import VoiceWaves from "./waves";
 
+let dialogueTimeout1 = null;
+let dialogueTimeout2 = null;
+
 $(document).ready(() => {
     const container = document.querySelector("#waves");
     const containerSpeech = document.querySelector("#wavesspeech");
@@ -22,42 +25,78 @@ $(document).ready(() => {
     let voicewaves = new VoiceWaves(opt);
     let voicespeech = new VoiceWaves(optSpeech);
 
-    $(".getaudio").bind("click", e => {
+    $("[access-mic]").bind("click", e => {
         navigator.mediaDevices
             .getUserMedia({
                 audio: true
             })
             .then(() => {
                 $(".alert").addClass("hidden");
-                $(".try").attr("disabled", false);
+                $("[load-command]").attr("disabled", false);
             });
     });
 
-    $(".try").bind("click", e => {
+    $("[load-command]").bind("click", loadCommand);
+
+    $("[load-listening]").bind("click", loadListening);
+
+    $("[stop-listening]").bind("click", stopListening);
+
+    function loadHome() {}
+
+    function loadCommand() {
         $("main#intro").fadeOut(1000, () => {
             $(".access").remove();
             $("#vui").fadeIn(1000);
         });
-    });
+    }
 
-    $(".talk").bind("click", e => {
-        $(e.target).hide();
-        $("#waves").css("height", opt.height);
-        $(".dialogue").text("I'm listening...");
+    function loadListening() {
+        clearTimeout(dialogueTimeout1);
+        clearTimeout(dialogueTimeout2);
+
+        const dialogue = $(".dialogue");
+
+        dialogue.text("I'm listening...");
+
+        $(".talk").hide();
+        $("#waves")
+            .fadeIn()
+            .css("height", opt.height);
         $(".speech")
-            .css("height", 0)
-            .hide();
+            .fadeOut()
+            .css("height", 0);
 
-        setTimeout(() => {
-            $(".dialogue").text("Go on, mhm...");
+        dialogueTimeout1 = setTimeout(() => {
+            dialogue.text("Go on, mhm...");
         }, 3000);
 
-        setTimeout(() => {
-            $(".dialogue").text("Still listening...");
+        dialogueTimeout2 = setTimeout(() => {
+            dialogue.text("Still listening...");
         }, 10000);
 
         voicewaves.start();
-    });
+    }
+
+    function stopListening() {
+        clearTimeout(dialogueTimeout1);
+        clearTimeout(dialogueTimeout2);
+
+        $("#waves")
+            .fadeOut()
+            .css("height", 0);
+
+        voicewaves.stop();
+        voicewaves.clear();
+
+        setTimeout(() => {
+            $(".talk").fadeIn();
+            $(".speech")
+                .fadeIn()
+                .css("height", "auto");
+            $(".dialogue").text("How may I help you today?");
+        }, 400);
+    }
 });
 
 const peer = new Peer("app", {

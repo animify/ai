@@ -29,11 +29,11 @@
                 A sponsored project by MIT Labs &amp; Carnegie Mellon. Built in
                 SF.
             </h3>
-            <div class="button try" disabled>Go ahead, Try me out</div>
+            <div class="button" load-command disabled>Go ahead, Try me out</div>
             <small>Available in Greek only. Japanese coming soon.</small>
         </main>
         <main id="vui" class="tc" style="display: none">
-            <h2>Hi Alexis.</h2>
+            <h2>Good evening, Alexis.</h2>
             <h1 class="dialogue">How may I help you today?</h1>
             <!--
                 <div class="list">
@@ -45,14 +45,14 @@
             -->
 
             <div class="speech">
-                <div id="wavesspeech" class="talk"></div>
+                <div id="wavesspeech" class="talk" load-listening></div>
 
-                <h3 class="talk">
+                <h3 class="talk" load-listening>
                     or say <strong>"Hey Georgia"</strong>, <br />followed by
                     your command.
                 </h3>
             </div>
-            <div id="waves" class="hidden"></div>
+            <div id="waves" class="hidden" stop-listening></div>
         </main>
         <!--
             <div class="content mt8 mw7 center">
@@ -83,7 +83,7 @@
                         >Hit "Allow microphone access" to get started.</strong
                     >
                 </p>
-                <a class="button getaudio">Allow microphone access</a>
+                <a class="button" access-mic>Allow microphone access</a>
             </div>
         </div>
     </body>

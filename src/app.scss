@@ -104,6 +104,7 @@ main {
     box-shadow: 0 4px 24px 8px rgba(0, 0, 0, 0.1);
     background-color: #000;
     margin-bottom: 24px;
+    animation: pulsate linear 4s infinite;
 }
 
 #waves,
@@ -112,6 +113,7 @@ main {
 
     &.hidden {
         height: 0px;
+        overflow: hidden;
     }
 }
 
@@ -235,5 +237,20 @@ main {
             rgba(255, 255, 255, 0)
         );
         z-index: 1;
+    }
+}
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }
