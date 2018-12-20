@@ -61,10 +61,10 @@ $(document).ready(() => {
 
         $(".talk").hide();
         $("#waves")
-            .fadeIn()
+            .fadeIn(400)
             .css("height", opt.height);
         $(".speech")
-            .fadeOut()
+            .fadeOut(400)
             .css("height", 0);
 
         dialogueTimeout1 = setTimeout(() => {
@@ -83,14 +83,14 @@ $(document).ready(() => {
         clearTimeout(dialogueTimeout2);
 
         $("#waves")
-            .fadeOut()
+            .fadeOut(400)
             .css("height", 0);
 
         voicewaves.stop();
         voicewaves.clear();
 
         setTimeout(() => {
-            $(".talk").fadeIn();
+            $(".talk").fadeIn(400);
             $(".speech")
                 .fadeIn()
                 .css("height", "auto");
