@@ -1,3 +1,5 @@
+import videos from "./videos";
+
 const peer = new Peer("playground", {
     host: "localhost",
     port: 9000,
@@ -12,10 +14,16 @@ peer.on("open", function(id) {
 
 dataConnection.on("open", data => {
     console.log("Connected to app");
+    $(".status")
+        .toggleClass("disconnected connected")
+        .text("Connected");
 });
 
 dataConnection.on("close", data => {
     console.log("Disconnected from app");
+    $(".status")
+        .toggleClass("connected disconnected")
+        .text("Disconnected");
 });
 
 console.log(peer);
@@ -35,5 +43,13 @@ $(document).ready(() => {
         }
 
         dataConnection.send(data);
+    });
+
+    $(".videos").empty();
+
+    Object.entries(videos).forEach(([id, video]) => {
+        $(".videos").append(
+            `<div command="play" video="${id}">${video.title}</div>`
+        );
     });
 });

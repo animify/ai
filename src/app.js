@@ -1,7 +1,10 @@
 import VoiceWaves from "./waves";
+import videos from "./videos";
+import { RefCountDisposable } from "rx";
 
 $(document).ready(() => {
     App.buildWaves();
+    App.populateVideos();
 
     $("[access-mic]").bind("click", App.getMicAccess);
     $("[load-command]").bind("click", App.loadCommand);
@@ -26,6 +29,7 @@ class App {
 
         return opt;
     }
+
     static optBall(container) {
         const opt = {
             height: 80,
@@ -41,6 +45,32 @@ class App {
 
         return opt;
     }
+
+    static get videoAttributes() {
+        return {
+            width: 500,
+            height: 500
+        };
+    }
+
+    static populateVideos() {
+        $(".videos").empty();
+
+        Object.entries(videos).forEach(([id, video]) => {
+            const newVideo = $("<video></video>");
+            const newSrc = $(`<source src="${video.path}" type="video/mp4" />`);
+
+            Object.entries(App.videoAttributes).forEach(([key, value]) =>
+                newVideo.attr(key, value)
+            );
+
+            newVideo.attr("video-id", id);
+            newVideo.append(newSrc);
+
+            $(".videos").append(newVideo);
+        });
+    }
+
     static buildWaves() {
         App.waves = new VoiceWaves(App.optWaves($("#waves").get(0)));
         App.waveball = new VoiceWaves(App.optBall($("#wavesspeech").get(0)));
@@ -48,21 +78,25 @@ class App {
 
     static loadHome() {
         $("main#vui").fadeOut(1000, () => {
-            stopListening();
+            App.stopListening();
             $("main#intro").fadeIn(1000);
         });
     }
 
     static loadCommand() {
-        $("main#intro").fadeOut(1000, () => {
+        $("main#intro, main#vid").fadeOut(1000);
+
+        setTimeout(() => {
             $("main#vui").fadeIn(1000);
-        });
+        }, 1000);
     }
 
     static loadResponse() {
-        $("main#intro, main#vui").fadeOut(1000, () => {
+        $("main#intro, main#vui").fadeOut(1000);
+
+        setTimeout(() => {
             $("main#vid").fadeIn(1000);
-        });
+        }, 1000);
     }
 
     static getMicAccess() {
@@ -72,10 +106,11 @@ class App {
             })
             .then(() => {
                 $(".alert").addClass("hidden");
+                $("[load-command]").attr("disabled", false);
+
                 setTimeout(() => {
                     $(".access").remove();
                 }, 1000);
-                $("[load-command]").attr("disabled", false);
             });
     }
 
@@ -106,7 +141,7 @@ class App {
         App.waves.start();
     }
 
-    static stopListening() {
+    static stopListening(delay = false) {
         clearTimeout(App.timeouts.d1);
         clearTimeout(App.timeouts.d2);
 
@@ -117,18 +152,19 @@ class App {
         App.waves.stop();
         App.waves.clear();
 
-        setTimeout(() => {
-            $(".talk").fadeIn(400);
-            $(".speech")
-                .fadeIn()
-                .css("height", "auto");
-            $(".dialogue").text("How may I help you today?");
-        }, 400);
+        setTimeout(
+            () => {
+                $(".talk").fadeIn(400);
+                $(".speech")
+                    .fadeIn()
+                    .css("height", "auto");
+                $(".dialogue").text("How may I help you today?");
+            },
+            delay ? 1400 : 400
+        );
     }
 
     static runCommand(data) {
-        // alert(`playing video ${num}`);
-
         switch (data.command) {
             case "start":
                 App.startListening();
@@ -137,21 +173,32 @@ class App {
                 App.stopListening();
                 break;
             case "play":
-                App.stopListening();
-                App.playVideo(data.video);
+                App.stopListening(true);
+                App.loadResponse();
+                setTimeout(() => {
+                    App.playVideo(data.video);
+                }, 1000);
                 break;
         }
     }
 
     static playVideo(number) {
         console.log("playing video num", number);
-
-        App.loadResponse();
-
-        $(".video")
+        const video = $(".videos")
             .find(`video[video-id="${number}"]`)
-            .get(0)
-            .play();
+            .get(0);
+
+        $("main#vid")
+            .find("h1")
+            .text(videos[number].title);
+
+        video.pause();
+        video.currentTime = 0;
+        video.play();
+
+        video.onended = () => {
+            App.loadCommand();
+        };
     }
 }
 

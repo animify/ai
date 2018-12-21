@@ -15,17 +15,17 @@
         <script src="./playground.js"></script>
     </head>
     <body class="playground">
-        <h1>Command Centre</h1>
+        <h1>
+            Command Centre <span class="status disconnected">Disconnected</span>
+        </h1>
 
+        <h2>Commands</h2>
         <div class="buttons">
-            <h2>Commands</h2>
             <div command="start">Start Listening</div>
             <div command="stop">Stop Listening</div>
-            <h2>Videos</h2>
-            <div command="play" video="1">Play video 1</div>
-            <div command="play" video="2">Play video 2</div>
-            <div command="play" video="3">Play video 3</div>
-            <div command="play" video="4">Play video 4</div>
         </div>
+
+        <h2>Videos</h2>
+        <div class="buttons videos"></div>
     </body>
 </html>
