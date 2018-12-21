@@ -10,6 +10,10 @@ body {
     font-family: "Inter UI";
     background-color: #fff;
     color: #000;
+
+    &.playground {
+        margin: 48px 24px 0 24px;
+    }
 }
 
 nav {
@@ -259,6 +263,43 @@ main {
         );
         z-index: 1;
     }
+}
+
+.buttons {
+    > h2 {
+        color: #555;
+        margin-top: 40px;
+    }
+    > div {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 15px;
+        border-radius: 4px;
+        background-color: #000;
+        color: #fff;
+
+        &:active {
+            background-color: blue;
+        }
+
+        + div {
+            margin-top: 20px;
+        }
+    }
+}
+
+.video {
+    content: " ";
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    margin-left: -250px;
+    height: 500px;
+    width: 500px;
 }
 
 @keyframes pulsate {

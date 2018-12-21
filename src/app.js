@@ -47,7 +47,7 @@ class App {
     }
 
     static loadHome() {
-        $("#vui").fadeOut(1000, () => {
+        $("main#vui").fadeOut(1000, () => {
             stopListening();
             $("main#intro").fadeIn(1000);
         });
@@ -55,7 +55,13 @@ class App {
 
     static loadCommand() {
         $("main#intro").fadeOut(1000, () => {
-            $("#vui").fadeIn(1000);
+            $("main#vui").fadeIn(1000);
+        });
+    }
+
+    static loadResponse() {
+        $("main#intro, main#vui").fadeOut(1000, () => {
+            $("main#vid").fadeIn(1000);
         });
     }
 
@@ -139,6 +145,13 @@ class App {
 
     static playVideo(number) {
         console.log("playing video num", number);
+
+        App.loadResponse();
+
+        $(".video")
+            .find(`video[video-id="${number}"]`)
+            .get(0)
+            .play();
     }
 }
 
