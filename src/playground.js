@@ -21,14 +21,19 @@ dataConnection.on("close", data => {
 console.log(peer);
 
 $(document).ready(() => {
-    $("body").on("click", "[message]", e => {
+    $("body").on("click", "[command]", e => {
         e.preventDefault();
         const target = $(e.target);
-        const message = target.attr("message");
+        const command = target.attr("command");
+        const video = target.attr("video");
+        const data = {
+            command
+        };
 
-        console.log("message", message);
-        dataConnection.send({
-            message
-        });
+        if (video) {
+            data.video = video;
+        }
+
+        dataConnection.send(data);
     });
 });

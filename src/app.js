@@ -1,63 +1,81 @@
 import VoiceWaves from "./waves";
 
-let dialogueTimeout1 = null;
-let dialogueTimeout2 = null;
-
 $(document).ready(() => {
-    const container = document.querySelector("#waves");
-    const containerSpeech = document.querySelector("#wavesspeech");
-    const opt = {
-        width: 600,
-        height: 80,
-        speed: 0.05,
-        amplitude: 0.8,
-        container,
-        autostart: false
-    };
-    const optSpeech = {
-        ...opt,
-        width: 80,
-        amplitude: 1,
-        speed: 0.005,
-        container: containerSpeech,
-        autostart: true
-    };
-    const voicewaves = new VoiceWaves(opt);
-    const voicespeech = new VoiceWaves(optSpeech);
+    App.buildWaves();
 
-    $("[access-mic]").bind("click", e => {
-        navigator.mediaDevices
-            .getUserMedia({
-                audio: true
-            })
-            .then(() => {
-                $(".alert").addClass("hidden");
-                $("[load-command]").attr("disabled", false);
-            });
-    });
+    $("[access-mic]").bind("click", App.getMicAccess);
+    $("[load-command]").bind("click", App.loadCommand);
+    $("[start-listening]").bind("click", App.startListening);
+    $("[load-home]").bind("click", App.loadHome);
+    $("[stop-listening]").bind("click", App.stopListening);
+});
 
-    $("[load-command]").bind("click", loadCommand);
-    $("[load-listening]").bind("click", loadListening);
-    $("[load-home]").bind("click", loadHome);
-    $("[stop-listening]").bind("click", stopListening);
+class App {
+    static optWaves(container) {
+        const opt = {
+            width: 600,
+            height: 80,
+            speed: 0.05,
+            amplitude: 0.8,
+            autostart: false
+        };
 
-    function loadHome() {
+        if (container) {
+            opt.container = container;
+        }
+
+        return opt;
+    }
+    static optBall(container) {
+        const opt = {
+            height: 80,
+            width: 80,
+            amplitude: 1,
+            speed: 0.005,
+            autostart: true
+        };
+
+        if (container) {
+            opt.container = container;
+        }
+
+        return opt;
+    }
+    static buildWaves() {
+        App.waves = new VoiceWaves(App.optWaves($("#waves").get(0)));
+        App.waveball = new VoiceWaves(App.optBall($("#wavesspeech").get(0)));
+    }
+
+    static loadHome() {
         $("#vui").fadeOut(1000, () => {
             stopListening();
             $("main#intro").fadeIn(1000);
         });
     }
 
-    function loadCommand() {
+    static loadCommand() {
         $("main#intro").fadeOut(1000, () => {
-            $(".access").remove();
             $("#vui").fadeIn(1000);
         });
     }
 
-    function loadListening() {
-        clearTimeout(dialogueTimeout1);
-        clearTimeout(dialogueTimeout2);
+    static getMicAccess() {
+        window.navigator.mediaDevices
+            .getUserMedia({
+                audio: true
+            })
+            .then(() => {
+                $(".alert").addClass("hidden");
+                setTimeout(() => {
+                    $(".access").remove();
+                }, 1000);
+                $("[load-command]").attr("disabled", false);
+            });
+    }
+
+    static startListening() {
+        clearTimeout(App.timeouts.d1);
+        clearTimeout(App.timeouts.d2);
 
         const dialogue = $(".dialogue");
 
@@ -66,32 +84,32 @@ $(document).ready(() => {
         $(".talk").hide();
         $("#waves")
             .fadeIn(400)
-            .css("height", opt.height);
+            .css("height", App.optWaves().height);
         $(".speech")
             .fadeOut(400)
             .css("height", 0);
 
-        dialogueTimeout1 = setTimeout(() => {
+        App.timeouts.d1 = setTimeout(() => {
             dialogue.text("Go on, mhm...");
         }, 3000);
 
-        dialogueTimeout2 = setTimeout(() => {
+        App.timeouts.d2 = setTimeout(() => {
             dialogue.text("Still listening...");
         }, 10000);
 
-        voicewaves.start();
+        App.waves.start();
     }
 
-    function stopListening() {
-        clearTimeout(dialogueTimeout1);
-        clearTimeout(dialogueTimeout2);
+    static stopListening() {
+        clearTimeout(App.timeouts.d1);
+        clearTimeout(App.timeouts.d2);
 
         $("#waves")
             .fadeOut(400)
             .css("height", 0);
 
-        voicewaves.stop();
-        voicewaves.clear();
+        App.waves.stop();
+        App.waves.clear();
 
         setTimeout(() => {
             $(".talk").fadeIn(400);
@@ -101,7 +119,35 @@ $(document).ready(() => {
             $(".dialogue").text("How may I help you today?");
         }, 400);
     }
-});
+
+    static runCommand(data) {
+        // alert(`playing video ${num}`);
+
+        switch (data.command) {
+            case "start":
+                App.startListening();
+                break;
+            case "stop":
+                App.stopListening();
+                break;
+            case "play":
+                App.stopListening();
+                App.playVideo(data.video);
+                break;
+        }
+    }
+
+    static playVideo(number) {
+        console.log("playing video num", number);
+    }
+}
+
+App.waves = null;
+App.waveball = null;
+App.timeouts = {
+    d1: null,
+    d2: null
+};
 
 const peer = new Peer("app", {
     host: "localhost",
@@ -118,6 +164,7 @@ peer.on("connection", conn => {
 
     conn.on("data", data => {
         console.log("got data", data);
+        App.runCommand(data);
     });
 });
 
