@@ -126,5 +126,77 @@ export default {
         title: "Weather",
         response: "10am",
         path: videos["Scene - Georgia - Weather"]
+    },
+    "22": {
+        assistant: "GeorgeS",
+        title: "Ate pareta me",
+        response: "10am",
+        path: videos["Scene - Stratis - Ate pareta me"]
+    },
+    "23": {
+        assistant: "GeorgeS",
+        title: "De gnorizo",
+        response: "10am",
+        path: videos["Scene - Stratis - De gnorizo"]
+    },
+    "24": {
+        assistant: "GeorgeS",
+        title: "Eftase",
+        response: "10am",
+        path: videos["Scene - Stratis - Eftase"]
+    },
+    "25": {
+        assistant: "GeorgeY",
+        title: "Eftase",
+        response: "10am",
+        path: videos["Scene - George - Eftase"]
+    },
+    "26": {
+        assistant: "GeorgeY",
+        title: "Error abort",
+        response: "10am",
+        path: videos["Scene - George - Error Abort"]
+    },
+    "27": {
+        assistant: "GeorgeY",
+        title: "Den mporo na apantiso",
+        response: "10am",
+        path: videos["Scene - George - Den mporo na apantiso"]
+    },
+    "28": {
+        assistant: "GeorgeY",
+        title: "Niaou",
+        response: "10am",
+        path: videos["Scene - George - Niaou"]
+    },
+    "29": {
+        assistant: "GeorgeY",
+        title: "Kokoko",
+        response: "10am",
+        path: videos["Scene - George - Kokoko"]
+    },
+    "30": {
+        assistant: "GeorgeY",
+        title: "10am",
+        response: "10am",
+        path: videos["Scene - George - 10am"]
+    },
+    "31": {
+        assistant: "GeorgeY",
+        title: "Beep",
+        response: "10am",
+        path: videos["Scene - George - Beep"]
+    },
+    "32": {
+        assistant: "GeorgeY",
+        title: "Varvatos",
+        response: "10am",
+        path: videos["Scene - George - Varvatos"]
+    },
+    "33": {
+        assistant: "GeorgeY",
+        title: "Format",
+        response: "10am",
+        path: videos["Scene - George - Format"]
     }
 };

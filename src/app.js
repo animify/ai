@@ -192,7 +192,7 @@ class App {
 
         $("main#vid")
             .find("h1")
-            .text(videos[number].title);
+            .text(videos[number].response);
 
         video.pause();
         video.currentTime = 0;
