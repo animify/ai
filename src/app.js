@@ -48,8 +48,8 @@ class App {
 
     static get videoAttributes() {
         return {
-            width: 500,
-            height: 500
+            width: 400,
+            height: 400
         };
     }
 
@@ -88,6 +88,7 @@ class App {
 
         setTimeout(() => {
             $("main#vui").fadeIn(1000);
+            $(".videos video").hide();
         }, 1000);
     }
 
@@ -186,6 +187,7 @@ class App {
         console.log("playing video num", number);
         const video = $(".videos")
             .find(`video[video-id="${number}"]`)
+            .show()
             .get(0);
 
         $("main#vid")
