@@ -192,7 +192,7 @@ class App {
 
         $("main#vid")
             .find("h1")
-            .text(videos[number].response);
+            .text(`"${videos[number].response}"`);
 
         video.pause();
         video.currentTime = 0;
@@ -212,7 +212,7 @@ App.timeouts = {
 };
 
 const peer = new Peer("app", {
-    host: "localhost",
+    host: "0.0.0.0",
     port: 9000,
     path: "/"
 });
@@ -237,3 +237,6 @@ peer.on("disconnected", conn => {
         peer.connect();
     }, 4000);
 });
+
+// ADD FLAG
+// chrome://flags/#autoplay-policy
