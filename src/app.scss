@@ -117,6 +117,21 @@ main {
             width: 100%;
         }
     }
+
+    &#vid {
+        h1 {
+            font-size: 54px;
+            display: block;
+            margin: 0 auto;
+            width: 70%;
+            letter-spacing: -1px;
+        }
+    }
+}
+
+#wavesresponse {
+    position: fixed;
+    bottom: -105px;
 }
 
 #wavesspeech {
@@ -134,7 +149,8 @@ main {
 }
 
 #waves,
-#wavesspeech {
+#wavesspeech,
+#wavesresponse {
     transition: height 400ms ease;
 
     &.hidden {
@@ -285,7 +301,7 @@ main {
 }
 
 .videos {
-    margin-top: 36px;
+    margin-bottom: 24px;
 
     video {
         display: none;

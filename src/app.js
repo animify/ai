@@ -34,6 +34,22 @@ class App {
         return opt;
     }
 
+    static optResponseWave(container) {
+        const opt = {
+            width: 400,
+            height: 200,
+            speed: 0.08,
+            amplitude: 0.6,
+            autostart: true
+        };
+
+        if (container) {
+            opt.container = container;
+        }
+
+        return opt;
+    }
+
     static optBall(container) {
         const opt = {
             height: 80,
@@ -78,9 +94,14 @@ class App {
     static buildWaves() {
         App.waves = new VoiceWaves(App.optWaves($("#waves").get(0)));
         App.waveball = new VoiceWaves(App.optBall($("#wavesspeech").get(0)));
+        App.waveresponse = new VoiceWaves(
+            App.optResponseWave($("#wavesresponse").get(0))
+        );
     }
 
     static loadHome() {
+        $(".dialogue").text("How may I help you today?");
+
         $("main#vui").fadeOut(1000, () => {
             App.stopListening();
             $("main#intro").fadeIn(1000);
@@ -90,16 +111,17 @@ class App {
     static loadCommand() {
         $("main#intro, main#vid").fadeOut(1000);
 
-        setTimeout(() => {
+        App.timeouts.command = setTimeout(() => {
             $("main#vui").fadeIn(1000);
             $(".videos video").hide();
         }, 1000);
     }
 
     static loadResponse() {
+        clearTimeout(App.timeouts.command);
         $("main#intro, main#vui").fadeOut(1000);
 
-        setTimeout(() => {
+        App.timeouts.response = setTimeout(() => {
             $("main#vid").fadeIn(1000);
         }, 1000);
     }
@@ -113,7 +135,7 @@ class App {
                 $(".alert").addClass("hidden");
                 $("[load-command]").attr("disabled", false);
 
-                setTimeout(() => {
+                App.timeouts.access = setTimeout(() => {
                     $(".access").remove();
                 }, 1000);
             });
@@ -157,7 +179,7 @@ class App {
         App.waves.stop();
         App.waves.clear();
 
-        setTimeout(
+        App.timeouts.stop = setTimeout(
             () => {
                 $(".talk").fadeIn(400);
                 $(".speech")
@@ -180,7 +202,7 @@ class App {
             case "play":
                 App.stopListening(true);
                 App.loadResponse();
-                setTimeout(() => {
+                App.timeouts.video = setTimeout(() => {
                     App.playVideo(data.video);
                 }, 1000);
                 break;
@@ -189,6 +211,17 @@ class App {
 
     static playVideo(number) {
         console.log("playing video num", number);
+
+        if (App.currentVideo) {
+            App.currentVideo.onended = null;
+        }
+
+        $(".videos video").each((i, video) => {
+            $(video).hide();
+            video.pause();
+            video.currentTime = 0;
+        });
+
         const video = $(".videos")
             .find(`video[video-id="${number}"]`)
             .show()
@@ -202,7 +235,10 @@ class App {
         video.currentTime = 0;
         video.play();
 
+        App.currentVideo = video;
+
         video.onended = () => {
+            $(".dialogue").text("How else may I help you?");
             App.loadCommand();
         };
     }
@@ -210,9 +246,16 @@ class App {
 
 App.waves = null;
 App.waveball = null;
+App.waveresponse = null;
+App.currentVideo = null;
 App.timeouts = {
     d1: null,
-    d2: null
+    d2: null,
+    command: null,
+    response: null,
+    access: null,
+    stop: null,
+    video: null
 };
 
 // ADD FLAG

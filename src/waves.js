@@ -79,6 +79,10 @@ class WaveCurve {
 
 export default class VoiceWaves {
     constructor(opt) {
+        if (this.opt && this.opt.container) {
+            $(this.opt.container).empty();
+        }
+
         this.opt = opt || {};
         this.tick = 0;
         this.run = false;
