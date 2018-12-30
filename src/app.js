@@ -10,7 +10,7 @@ $(document).ready(() => {
     $("[load-command]").bind("click", App.loadCommand);
     $("[start-listening]").bind("click", App.startListening);
     $("[load-home]").bind("click", App.loadHome);
-    $("[stop-listening]").bind("click", App.stopListening);
+    $("[stop-listening]").bind("click", App.stopListening.bind(null, false));
 });
 
 class App {
