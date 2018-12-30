@@ -91,12 +91,6 @@ export default {
         response: "10am",
         path: videos["Scene - Georgia - Noni"]
     },
-    "17": {
-        assistant: "Georgia",
-        title: "OK",
-        response: "Okay",
-        path: videos["Scene - Georgia - OK"]
-    },
     "18": {
         assistant: "Georgia",
         title: "Parageila",
@@ -135,9 +129,9 @@ export default {
     },
     "24": {
         assistant: "GeorgeS",
-        title: "Eftase",
+        title: "Nai",
         response: "10am",
-        path: videos["Scene - Stratis - Eftase"]
+        path: videos["Scene - Stratis - Nai"]
     },
     "25": {
         assistant: "GeorgeY",
