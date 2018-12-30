@@ -1,6 +1,8 @@
 import VoiceWaves from "./waves";
 import videos from "./videos";
-import { RefCountDisposable } from "rx";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 $(document).ready(() => {
     App.buildWaves();
@@ -11,6 +13,8 @@ $(document).ready(() => {
     $("[start-listening]").bind("click", App.startListening);
     $("[load-home]").bind("click", App.loadHome);
     $("[stop-listening]").bind("click", App.stopListening.bind(null, false));
+
+    socket.on("command", App.runCommand);
 });
 
 class App {
@@ -210,33 +214,6 @@ App.timeouts = {
     d1: null,
     d2: null
 };
-
-const peer = new Peer("app", {
-    host: "0.0.0.0",
-    port: 9000,
-    path: "/"
-});
-
-peer.on("open", id => {
-    console.log("My peer ID is: " + id);
-});
-
-peer.on("connection", conn => {
-    console.log("Connected to server");
-
-    conn.on("data", data => {
-        console.log("got data", data);
-        App.runCommand(data);
-    });
-});
-
-peer.on("disconnected", conn => {
-    console.log("Disconnected from server");
-
-    setTimeout(() => {
-        peer.connect();
-    }, 4000);
-});
 
 // ADD FLAG
 // chrome://flags/#autoplay-policy

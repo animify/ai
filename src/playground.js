@@ -1,10 +1,24 @@
 import videos from "./videos";
+import io from "socket.io-client";
+
+const socket = io(`http://${window.location.hostname}:3000`);
+
+socket.on("connect", () => {
+    $(".status")
+        .toggleClass("disconnected connected")
+        .text("Connected");
+});
+
+socket.on("disconnect", () => {
+    $(".status")
+        .toggleClass("connected disconnected")
+        .text("Disconnected");
+});
 
 $(document).ready(() => {
-    alert("ready");
-
     $("body").on("click", "[command]", e => {
         e.preventDefault();
+
         const target = $(e.target);
         const command = target.attr("command");
         const video = target.attr("video");
@@ -16,7 +30,7 @@ $(document).ready(() => {
             data.video = video;
         }
 
-        dataConnection.send(data);
+        socket.emit("command", data);
     });
 
     $(".videos").empty();
@@ -27,37 +41,3 @@ $(document).ready(() => {
         );
     });
 });
-
-const peer = new Peer("playground", {
-    host: "0.0.0.0",
-    port: 9000,
-    path: "/"
-});
-
-const dataConnection = peer.connect("app");
-
-peer.on("open", function(id) {
-    console.log("My peer ID is: " + id);
-});
-
-peer.on("error", function(id) {
-    alert("error");
-});
-
-dataConnection.on("open", data => {
-    console.log("opening", data);
-    console.log("Connected to app");
-    $(".status")
-        .toggleClass("disconnected connected")
-        .text("Connected");
-});
-
-dataConnection.on("close", data => {
-    console.log("Disconnected from app");
-    console.log("opening", data);
-    $(".status")
-        .toggleClass("connected disconnected")
-        .text("Disconnected");
-});
-
-// console.log(peer);

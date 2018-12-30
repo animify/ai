@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"peerjs --port 9000 --key peerjs\" \"parcel src/index.html\"",
+    "start": "concurrently \"node src/server.js\" \"parcel src/index.html\"",
     "deploy": "parcel build src/index.html && netlify deploy --prod --dir=dist"
   },
   "devDependencies": {
@@ -14,7 +14,7 @@
     "sass": "^1.15.2"
   },
   "dependencies": {
-    "peer": "^0.2.10",
-    "rx": "^4.1.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   }
 }
