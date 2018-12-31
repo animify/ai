@@ -271,7 +271,6 @@ main {
 .playground {
     h2 {
         color: #555;
-        margin-top: 40px;
     }
 }
 
@@ -295,20 +294,34 @@ main {
         }
     }
 
+    &:not(.options) .clicked {
+        opacity: 0.6;
+    }
+
     &.fixed {
         position: fixed;
         top: 0;
         display: flex;
         flex-direction: row;
-        background-color: rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 100%;
+        left: 0;
+        padding: 12px;
+        border-bottom: 2px solid #fff;
 
         > div {
             margin-top: 0 !important;
+            padding: 12px 20px;
+
+            + div {
+                margin-left: 8px;
+            }
         }
     }
 }
 
 .status {
+    margin-top: 20px;
     color: red;
 
     &.connected {

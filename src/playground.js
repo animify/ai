@@ -26,6 +26,8 @@ $(document).ready(() => {
             command
         };
 
+        target.addClass("clicked");
+
         if (video) {
             data.video = video;
         }
@@ -49,7 +51,7 @@ $(document).ready(() => {
         .filter(([id, video]) => !video.order)
         .sort(([id1, video1], [id2, video2]) => video1.order - video2.order)
         .forEach(([id, video]) => {
-            $(".videos").append(
+            $(".buttons.options").append(
                 `<div command="play" video="${id}">${video.title}</div>`
             );
         });
