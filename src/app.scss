@@ -42,6 +42,10 @@ nav {
             margin-left: 36px;
         }
     }
+
+    .options {
+        display: none;
+    }
 }
 
 main {
@@ -288,6 +292,18 @@ main {
 
         + div {
             margin-top: 20px;
+        }
+    }
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+        display: flex;
+        flex-direction: row;
+        background-color: rgba(255, 255, 255, 0.4);
+
+        > div {
+            margin-top: 0 !important;
         }
     }
 }

@@ -35,9 +35,22 @@ $(document).ready(() => {
 
     $(".videos").empty();
 
-    Object.entries(videos).forEach(([id, video]) => {
-        $(".videos").append(
-            `<div command="play" video="${id}">${video.title}</div>`
-        );
-    });
+    console.log(Object.entries(videos).sort((a, b) => a.order - b.order));
+    Object.entries(videos)
+        .filter(([id, video]) => video.order)
+        .sort(([id1, video1], [id2, video2]) => video1.order - video2.order)
+        .forEach(([id, video]) => {
+            $(".videos").append(
+                `<div command="play" video="${id}">${video.title}</div>`
+            );
+        });
+
+    Object.entries(videos)
+        .filter(([id, video]) => !video.order)
+        .sort(([id1, video1], [id2, video2]) => video1.order - video2.order)
+        .forEach(([id, video]) => {
+            $(".videos").append(
+                `<div command="play" video="${id}">${video.title}</div>`
+            );
+        });
 });
