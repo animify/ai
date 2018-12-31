@@ -231,6 +231,16 @@ class App {
             .find("h1")
             .text(`"${videos[number].response}"`);
 
+        const assistant = videos[number].assistant;
+
+        if (assistant === "Georgia") {
+            $("#logo-g2").hide();
+            $("#logo-g1").show();
+        } else {
+            $("#logo-g1").hide();
+            $("#logo-g2").show();
+        }
+
         video.pause();
         video.currentTime = 0;
         video.play();
